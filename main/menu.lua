@@ -1,10 +1,30 @@
--- Script tạo menu trong suốt, tự động mở, icon di chuyển được, hỗ trợ tất cả thiết bị, hiển thị notification
+-- Script tạo menu trong suốt, yêu cầu key từ bot Discord, chạy qua GitHub
+local HttpService = game:GetService("HttpService")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
 
--- Tạo ScreenGui
+-- Kiểm tra key
+local function checkKey(userId, key)
+    local success, response = pcall(function()
+        return HttpService:GetAsync("http://127.0.0.1:8342/check-key?user_id=" .. userId .. "&key=" .. HttpService:UrlEncode(key))
+    end)
+    if success then
+        local data = HttpService:JSONDecode(response)
+        return data.valid
+    else
+        return false
+    end
+end
+
+-- Kiểm tra biến script_key
 local player = Players.LocalPlayer
+if not getenv().script_key or not checkKey(player.UserId, getenv().script_key) then
+    player:Kick("Key không hợp lệ hoặc chưa redeem trên bot Discord!")
+    return
+end
+
+-- Tạo ScreenGui
 local playerGui = player.PlayerGui
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
@@ -170,8 +190,8 @@ menuIcon.InputBegan:Connect(function(input)
         dragging = true
         dragStart = input.Position
         startPos = menuIcon.Position
-    end
-end)
+    end)
+end
 
 menuIcon.InputEnded:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -197,8 +217,8 @@ menuIcon.InputEnded:Connect(function(input)
                 dragging = false
             end
         end
-    end
-end)
+    end)
+end
 
 UserInputService.InputChanged:Connect(function(input)
     if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
@@ -210,8 +230,8 @@ UserInputService.InputChanged:Connect(function(input)
             startPos.Y.Offset + delta.Y
         )
         menuIcon.Position = newPos
-    end
-end)
+    end)
+end
 
 -- Hiệu ứng mở Menu và hiển thị Notification
 local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
