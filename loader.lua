@@ -3,9 +3,6 @@ local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao1
 local Window = redzlib:MakeWindow({
     Title = "Neurokryze Hub",
     SubTitle = "by Esoulindust",
-    Size = UDim2.new(0, 470, 0, 320),
-    TabWidth = 140,
-    SaveFolder = "neurokryze.json"
 })
 
 Window:AddMinimizeButton({
