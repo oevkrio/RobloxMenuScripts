@@ -1,11 +1,11 @@
-local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/newredz/RedzLibV5/refs/heads/main/Source.lua"))()
+local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/Library-ui/refs/heads/main/Redzhubui"))()
 
 local Window = redzlib:MakeWindow({
     Title = "Neurokryze Hub",
     SubTitle = "by Esoulindust",
     Size = UDim2.new(0, 470, 0, 320),
     TabWidth = 140,
-    SaveFolder = "neurokryze.lua"
+    SaveFolder = "neurokryze.json"
 })
 
 Window:AddMinimizeButton({
