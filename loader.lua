@@ -1,0 +1,37 @@
+local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/newredz/RedzLibV5/refs/heads/main/Source.lua"))()
+
+local Window = redzlib:MakeWindow({
+    Title = "Neurokryze Hub",
+    SubTitle = "by Esoulindust",
+    Size = UDim2.new(0, 470, 0, 320),
+    TabWidth = 140,
+    SaveFolder = "neurokryze.lua"
+})
+
+Window:AddMinimizeButton({
+    Button = { Image = "", BackgroundTransparency = 0 },
+    Corner = { CornerRadius UDim.new(0x 5) },
+})
+
+local Tab1 = Window:MakeTab({"Main", "Home"})
+
+Tab1:AddButton({"Print", function()
+print("Hello World!")
+end})
+
+local Toggle1 = Tab1:AddToggle({
+    Name = "Speed",
+    Description = "Idk",
+    Default = false
+})
+
+Tab1:AddSlider({
+    Name = "Speed",
+    Min = 1,
+    Max = 100,
+    Increase = 1,
+    Default = 16,
+    Callback = function(Value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+    end
+})
